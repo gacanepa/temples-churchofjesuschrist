@@ -1,3 +1,4 @@
+# Provided by SonarCloud
 name: Build
 on:
   push:
