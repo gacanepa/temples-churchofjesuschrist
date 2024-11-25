@@ -5,7 +5,7 @@ import {
   getTempleById,
   softDeleteTemple,
   updateTemple,
-} from '../controllers/contacts.js';
+} from '../controllers/temples.js';
 
 const router = Router();
 
