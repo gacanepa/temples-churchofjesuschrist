@@ -4,7 +4,7 @@ import {
   IN_OPERATION,
   NORTH_AMERICA,
   STATUS,
-} from '../constants';
+} from '../constants.js';
 
 const TemplesSchema = new mongoose.Schema({
   name: {
@@ -76,4 +76,6 @@ const TemplesSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-const Temples = mongoose.model('Temples', TemplesSchema);
+const Temple = mongoose.model('Temple', TemplesSchema);
+
+export default Temple;
