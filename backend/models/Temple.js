@@ -1,8 +1,6 @@
 import mongoose from 'mongoose';
 import {
   CONTINENTS,
-  IN_OPERATION,
-  NORTH_AMERICA,
   STATUS,
 } from '../constants.js';
 
@@ -36,8 +34,10 @@ const TemplesSchema = new mongoose.Schema({
   continent: {
     type: String,
     required: true,
-    enum: CONTINENTS,
-    default: NORTH_AMERICA,
+    enum: {
+      values: CONTINENTS,
+      message: '{VALUE} is not a valid continent',
+    },
   },
   pictureUrl: {
     type: String,
@@ -48,8 +48,10 @@ const TemplesSchema = new mongoose.Schema({
   status: {
     type: String,
     required: true,
-    enum: STATUS,
-    default: IN_OPERATION,
+    enum: {
+      values: STATUS,
+      message: '{VALUE} is not a valid status',
+    },
   },
   latitude: {
     type: Number,
