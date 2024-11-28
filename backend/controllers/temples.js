@@ -14,7 +14,10 @@ export const getTempleById = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const temple = await Temple.findOne({ _id: id, isDeleted: false });
+    const temple = await Temple.findById({
+      _id: id,
+      isDeleted: false,
+    });
     res.status(StatusCodes.OK).json(temple);
   } catch (error) {
     res.status(StatusCodes.NOT_FOUND).json({ message: error.message });
@@ -64,7 +67,7 @@ export const updateTemple = async (req, res) => {
 
   try {
     await existingTemple.save();
-    res.status(StatusCodes.OK).json(updatedTemple);
+    res.status(StatusCodes.OK).json(existingTemple);
   } catch (error) {
     res.status(StatusCodes.BAD_REQUEST).json({ message: error.message });
   }
@@ -73,7 +76,7 @@ export const updateTemple = async (req, res) => {
 export const softDeleteTemple = async (req, res) => {
   const { id } = req.params;
 
-  const existingTemple = await Temple.findOne({
+  const existingTemple = await Temple.findById({
     _id: id,
     isDeleted: false,
   });
