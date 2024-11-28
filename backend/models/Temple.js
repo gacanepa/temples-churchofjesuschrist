@@ -6,6 +6,24 @@ import {
   STATUS,
 } from '../constants.js';
 
+const PublicOpenHouseSchema = new mongoose.Schema({
+  startDate: Date,
+  endDate: Date,
+}, { _id: false });
+
+const DedicationSchema = new mongoose.Schema({
+  dedicationDate: Date,
+  dedicatedBy: String,
+  prayerUrl: String,
+}, { _id: false });
+
+const MilestonesSchema = new mongoose.Schema({
+  announcedDate: Date,
+  groundbreakingDate: Date,
+  dedications: [DedicationSchema],
+  publicOpenHouses: [PublicOpenHouseSchema],
+}, { _id: false });
+
 const TemplesSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -39,37 +57,7 @@ const TemplesSchema = new mongoose.Schema({
   longitude: {
     type: Number,
   },
-  milestones: {
-    type: {
-      announcedDate: {
-        type: Date,
-      },
-      groundbreakingDate: {
-        type: Date,
-      },
-      dedications: [
-        {
-          dedicationDate: {
-            type: Date,
-          },
-          dedicatedBy: {
-            type: String,
-          },
-          prayerUrl: {
-            type: String,
-          },
-          publicOpenHouse: {
-            startDate: {
-              type: Date,
-            },
-            endDate: {
-              type: Date,
-            },
-          }
-        },
-      ],
-    },
-  },
+  milestones: MilestonesSchema,
   isDeleted: {
     type: Boolean,
     default: false,
