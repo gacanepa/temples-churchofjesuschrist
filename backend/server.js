@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import connect from './data/database.js';
+import docsRoutes from './routes/docs.js';
 import indexRoutes from './routes/index.js';
 import templesRoutes from './routes/temples.js';
 
@@ -18,7 +19,7 @@ const port = process.env.PORT || 3001;
 
 app.use('/', indexRoutes);
 app.use('/temples', templesRoutes);
-// app.use('/docs', docsRoutes);
+app.use('/docs', docsRoutes);
 
 app.listen(port, async () => {
   await connect(process.env.MONGODB_URI);
