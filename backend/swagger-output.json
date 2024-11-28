@@ -1,0 +1,163 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Temples API",
+    "description": "Temples of The Church of Jesus Christ of Latter-day Saints",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3001",
+  "basePath": "/temples",
+  "schemes": [
+    "http"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "country": {
+                  "example": "any"
+                },
+                "continent": {
+                  "example": "any"
+                },
+                "pictureUrl": {
+                  "example": "any"
+                },
+                "status": {
+                  "example": "any"
+                },
+                "address": {
+                  "example": "any"
+                },
+                "milestones": {
+                  "example": "any"
+                },
+                "isDeleted": {
+                  "example": "any"
+                },
+                "latitude": {
+                  "example": "any"
+                },
+                "longitude": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "country": {
+                  "example": "any"
+                },
+                "continent": {
+                  "example": "any"
+                },
+                "pictureUrl": {
+                  "example": "any"
+                },
+                "address": {
+                  "example": "any"
+                },
+                "status": {
+                  "example": "any"
+                },
+                "milestones": {
+                  "example": "any"
+                },
+                "latitude": {
+                  "example": "any"
+                },
+                "longitude": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    }
+  }
+}
