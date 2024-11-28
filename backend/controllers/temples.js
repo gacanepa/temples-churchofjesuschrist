@@ -25,12 +25,40 @@ export const getTempleById = async (req, res) => {
 };
 
 export const createTemple = async (req, res) => {
-  const temple = req.body;
+  const {
+    name,
+    country,
+    continent,
+    pictureUrl,
+    status,
+    address,
+    milestones,
+    isDeleted,
+    latitude,
+    longitude,
+  } = req.body;
 
-  const newTemple = await Temple.create(temple);
+  if (!name || !country || !continent || !status) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ message: 'Missing required fields' });
+  }
+
+  const templeData = {
+    name,
+    country,
+    continent,
+    pictureUrl,
+    status,
+    address,
+    milestones,
+    isDeleted,
+    latitude,
+    longitude,
+  };
 
   try {
-    await newTemple.save();
+    const newTemple = await Temple.create(templeData);
     res.status(StatusCodes.CREATED).json(newTemple);
   } catch (error) {
     res.status(StatusCodes.BAD_REQUEST).json({ message: error.message });
@@ -49,25 +77,40 @@ export const updateTemple = async (req, res) => {
     latitude,
     longitude,
   } = req.body;
+
+  const updatedTemple = {};
   
-  const existingTemple = await Temple.findOne({
+  const existingTemple = await Temple.findById({
     _id: req.params.id,
     isDeleted: false,
   });
 
-  existingTemple.name = name;
-  existingTemple.country = country;
-  existingTemple.continent = continent;
-  existingTemple.pictureUrl = pictureUrl;
-  existingTemple.address = address;
-  existingTemple.status = status;
-  existingTemple.milestones = milestones;
-  existingTemple.latitude = latitude;
-  existingTemple.longitude = longitude;
+  if (!existingTemple) {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ message: 'Temple not found' });
+  }
+
+  if (name) updatedTemple.name = name ?? existingTemple.name;
+  if (country) updatedTemple.country = country ?? existingTemple.country;
+  if (continent) updatedTemple.continent = continent ?? existingTemple.continent;
+  if (pictureUrl) updatedTemple.pictureUrl = pictureUrl ?? existingTemple.pictureUrl;
+  if (address) updatedTemple.address = address ?? existingTemple.address;
+  if (status) updatedTemple.status = status ?? existingTemple.status;
+  if (milestones) updatedTemple.milestones = milestones ?? existingTemple.milestones;
+  if (latitude) updatedTemple.latitude = latitude ?? existingTemple.latitude;
+  if (longitude) updatedTemple.longitude = longitude ?? existingTemple.longitude;
 
   try {
-    await existingTemple.save();
-    res.status(StatusCodes.OK).json(existingTemple);
+    const updatedTempleData = await Temple.findByIdAndUpdate(
+      { _id: req.params.id },
+      updatedTemple,
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    res.status(StatusCodes.OK).json(updatedTempleData);
   } catch (error) {
     res.status(StatusCodes.BAD_REQUEST).json({ message: error.message });
   }
