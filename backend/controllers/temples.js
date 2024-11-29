@@ -1,5 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 import Temple from '../models/Temple.js';
+import handleNullUndefined from '../utilities/handleNullUndefined.js';
 
 export const getAllTemples = async (req, res) => {
   try {
@@ -33,7 +34,6 @@ export const createTemple = async (req, res) => {
     status,
     address,
     milestones,
-    isDeleted,
     latitude,
     longitude,
   } = req.body;
@@ -45,16 +45,15 @@ export const createTemple = async (req, res) => {
   }
 
   const templeData = {
-    name,
-    country,
-    continent,
-    pictureUrl,
-    status,
-    address,
-    milestones,
-    isDeleted,
-    latitude,
-    longitude,
+    name: handleNullUndefined(name),
+    country: handleNullUndefined(country),
+    continent: handleNullUndefined(continent),
+    pictureUrl: handleNullUndefined(pictureUrl),
+    status: handleNullUndefined(status),
+    address: handleNullUndefined(address),
+    milestones: handleNullUndefined(milestones),
+    latitude: handleNullUndefined(latitude),
+    longitude: handleNullUndefined(longitude),
   };
 
   try {
@@ -91,22 +90,24 @@ export const updateTemple = async (req, res) => {
       .json({ message: 'Temple not found' });
   }
 
-  if (name) updatedTemple.name = name ?? existingTemple.name;
-  if (country) updatedTemple.country = country ?? existingTemple.country;
-  if (continent) updatedTemple.continent = continent ?? existingTemple.continent;
-  if (pictureUrl) updatedTemple.pictureUrl = pictureUrl ?? existingTemple.pictureUrl;
-  if (address) updatedTemple.address = address ?? existingTemple.address;
-  if (status) updatedTemple.status = status ?? existingTemple.status;
-  if (milestones) updatedTemple.milestones = milestones ?? existingTemple.milestones;
-  if (latitude) updatedTemple.latitude = latitude ?? existingTemple.latitude;
-  if (longitude) updatedTemple.longitude = longitude ?? existingTemple.longitude;
+  if (name) updatedTemple.name = handleNullUndefined(name ?? existingTemple.name);
+  if (country) updatedTemple.country = handleNullUndefined(country ?? existingTemple.country);
+  if (continent) updatedTemple.continent = handleNullUndefined(continent ?? existingTemple.continent);
+  if (pictureUrl) updatedTemple.pictureUrl = handleNullUndefined(pictureUrl ?? existingTemple.pictureUrl);
+  if (address) updatedTemple.address = handleNullUndefined(address ?? existingTemple.address);
+  if (status) updatedTemple.status = handleNullUndefined(status ?? existingTemple.status);
+  if (milestones) updatedTemple.milestones = handleNullUndefined(milestones ?? existingTemple.milestones);
+  if (latitude) updatedTemple.latitude = handleNullUndefined(latitude ?? existingTemple.latitude);
+  if (longitude) updatedTemple.longitude = handleNullUndefined(longitude ?? existingTemple.longitude);
 
   try {
     const updatedTempleData = await Temple.findByIdAndUpdate(
       { _id: req.params.id },
       updatedTemple,
       {
+        // Return the updated document instead of the original
         new: true,
+        // Enable full validation (not available by default)
         runValidators: true,
       }
     );
