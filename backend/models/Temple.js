@@ -10,7 +10,10 @@ const PublicOpenHouseSchema = new mongoose.Schema({
 }, { _id: false });
 
 const DedicationSchema = new mongoose.Schema({
-  dedicationDate: Date,
+  dedicationDate: {
+    type: Date,
+    min: ['1836-03-27', 'Kirtland Temple was dedicated on March 27, 1836'],
+  },
   dedicatedBy: String,
   prayerUrl: String,
 }, { _id: false });
@@ -25,15 +28,15 @@ const MilestonesSchema = new mongoose.Schema({
 const TemplesSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: [true, 'Name is required'],
   },
   country: {
     type: String,
-    required: true,
+    required: [true, 'Country is required'],
   },
   continent: {
     type: String,
-    required: true,
+    required: [true, 'Continent is required'],
     enum: {
       values: CONTINENTS,
       message: '{VALUE} is not a valid continent',
@@ -47,7 +50,7 @@ const TemplesSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    required: true,
+    required: [true, 'Status is required'],
     enum: {
       values: STATUS,
       message: '{VALUE} is not a valid status',
@@ -55,9 +58,13 @@ const TemplesSchema = new mongoose.Schema({
   },
   latitude: {
     type: Number,
+    min: [-90, 'Latitude must be between -90 and 90'],
+    max: [90, 'Latitude must be between -90 and 90'],
   },
   longitude: {
     type: Number,
+    min: [-180, 'Longitude must be between -180 and 180'],
+    max: [180, 'Longitude must be between -180 and 180'],
   },
   milestones: MilestonesSchema,
   isDeleted: {
