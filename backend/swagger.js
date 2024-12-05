@@ -5,10 +5,16 @@ const doc = {
     title: 'Temples API',
     description: 'Temples of The Church of Jesus Christ of Latter-day Saints',
   },
-  host: 'temples-churchofjesuschrist.onrender.com',
+  // Production
+  // host: 'temples-churchofjesuschrist.onrender.com',
+  // Development
+  host: 'localhost:3001',
   basePath: '/temples',
   produces: ['application/json'],
-  schemes: ['https'],
+  // Production
+  // schemes: ['https'],
+  // Development
+  schemes: ['http'],
 };
 
 const outputFile = './swagger-output.json';
