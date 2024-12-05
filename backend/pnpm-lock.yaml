@@ -18,7 +18,7 @@ importers:
         specifier: ^2.3.0
         version: 2.3.0
       mongoose:
-        specifier: ^8.8.2
+        specifier: ^8.8.3
         version: 8.8.3
       swagger-ui-express:
         specifier: ^5.0.1
