@@ -5,10 +5,10 @@
     "description": "Temples of The Church of Jesus Christ of Latter-day Saints",
     "version": "1.0.0"
   },
-  "host": "temples-churchofjesuschrist.onrender.com",
+  "host": "localhost:3001",
   "basePath": "/temples",
   "schemes": [
-    "https"
+    "http"
   ],
   "produces": [
     "application/json"
