@@ -8,6 +8,7 @@ import connect from './data/database.js';
 import docsRoutes from './routes/docs.js';
 import indexRoutes from './routes/index.js';
 import templesRoutes from './routes/temples.js';
+import { COOKIE_MAX_AGE } from './constants.js';
 
 import User from './models/User.js';
 
@@ -27,11 +28,20 @@ Session configuration is required for Passport.js to work.
 - secret: =secret key that will be used to encrypt the session.
 - resave: determines whether the session should be saved to the session store on every request.
 - saveUninitialized: indicates whether a session should be saved to the session store even if it is empty.
+- cookie: configuration for the session cookie.
+  - secure: indicates whether the cookie should only be sent over HTTPS.
+  - httpOnly: indicates whether the cookie should be accessible only through the HTTP protocol.
+  - maxAge: the maximum age of the cookie in milliseconds.
 */
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    secure: process.env.NODE_ENV === 'development',
+    httpOnly: true,
+    maxAge: COOKIE_MAX_AGE,
+  }
 }));
 
 // Passport.js configuration
@@ -76,11 +86,7 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-app.get('/', (req, res) => res.send(req.session.user !== undefined
-  ? `Hello, ${req.session.user.displayName}`
-  : 'Logged out'));
-app.get('/auth/github/callback',
-  passport.authenticate('github', {
+app.get('/auth/github/callback', passport.authenticate('github', {
     failureRedirect: '/docs',
     session: false,
   }), (req, res) => {
