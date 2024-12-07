@@ -3,6 +3,7 @@ import express from 'express';
 import passport from 'passport';
 import session from 'express-session';
 import Strategy from 'passport-github2';
+import lusca from 'lusca';
 
 import connect from './data/database.js';
 import docsRoutes from './routes/docs.js';
@@ -43,6 +44,9 @@ app.use(session({
     maxAge: COOKIE_MAX_AGE,
   }
 }));
+
+// CSRF protection
+app.use(lusca.csrf());
 
 // Passport.js configuration
 app.use(passport.initialize());
