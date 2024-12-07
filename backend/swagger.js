@@ -1,20 +1,17 @@
+import dotenv from 'dotenv';
 import swaggerAutogen from 'swagger-autogen';
+
+dotenv.config();
 
 const doc = {
   info: {
     title: 'Temples API',
     description: 'Temples of The Church of Jesus Christ of Latter-day Saints',
   },
-  // Production
-  // host: 'temples-churchofjesuschrist.onrender.com',
-  // Development
-  host: 'localhost:3001',
+  host: process.env.HOST,
   basePath: '/temples',
   produces: ['application/json'],
-  // Production
-  // schemes: ['https'],
-  // Development
-  schemes: ['http'],
+  schemes: [process.env.MAIN_SCHEME],
 };
 
 const outputFile = './swagger-output.json';
