@@ -27,3 +27,7 @@ export const STATUS = [
   IN_OPERATION,
   CLOSED,
 ];
+
+export const RATE_LIMIT_TIME_WINDOW = 15 * 60 * 1000; // 15 minutes
+export const RATE_LIMIT_MAX_REQUESTS = 100;
+export const RATE_LIMIT_MESSAGE = 'Too many requests, please try again later';
