@@ -2,9 +2,9 @@ import { Router } from 'express';
 import passport from 'passport';
 const router = Router();
 
-router.get('/', (_req, res) => {
-  res.send('<h1>Welcome to the temples API</h1>');
-});
+router.get('/', (req, res) => res.send(req.session.user !== undefined
+  ? `Hello, ${req.session.user.displayName}`
+  : '<h1>Welcome to the temples API</h1>'));
 
 router.get('/login', passport.authenticate('github'), (_req, _res) => {});
 
