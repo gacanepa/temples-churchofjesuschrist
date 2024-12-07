@@ -17,7 +17,7 @@ import {
 const router = Router();
 
 // Configure rate limiter to prevent abuse of the API
-const limiter = new RateLimit({
+const limiter = RateLimit({
   windowMs: RATE_LIMIT_TIME_WINDOW,
   max: RATE_LIMIT_MAX_REQUESTS,
   message: RATE_LIMIT_MESSAGE,
